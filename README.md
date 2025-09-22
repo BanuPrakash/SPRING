@@ -452,3 +452,11 @@ Won't create tables if not present
 won't alter tables
 
 ===
+CommandLineRunner is a interface in Spring Boot that provides a mechanism to execute run() after the Spring Boot application has started and the application context has been fully loaded.
+
+
+Issues to resolve if any with lombok:
+1)
+Settings --> Build, Execution, Deployment --> Compiler ->Annotation Processor --> shopapp -> Obtain processors from classpath.
+
+2) mvn clean
