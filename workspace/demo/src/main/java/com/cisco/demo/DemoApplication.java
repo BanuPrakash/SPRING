@@ -11,10 +11,10 @@ public class DemoApplication {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(DemoApplication.class, args);
 
-        String[] names = ctx.getBeanDefinitionNames(); // all beans within container
-        for(String bean: names) {
-            System.out.println(bean);
-        }
+//        String[] names = ctx.getBeanDefinitionNames(); // all beans within container
+//        for(String bean: names) {
+//            System.out.println(bean);
+//        }
 
         System.out.println("Pull the bean from Container");
         AppService service = ctx.getBean("appService", AppService.class);

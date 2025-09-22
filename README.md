@@ -234,3 +234,98 @@ SpringApplication.run(DemoApplication.class, args); is similar to    new Annotat
 2) @ComponentScan(basePackage="com.cisco.demo")
 3) @EnableAutoConfiguration
 
+
+
+```
+@Autowired
+private UserRepo userRepo;
+
+Could not autowire. There is more than one bean of 'UserRepo' type.
+Beans:
+userRepoDbImpl   (UserRepoDbImpl.java) 
+userRepoMongoImpl   (UserRepoMongoImpl.java)
+
+```
+
+Solution 1: using @Primary [ rarely used]
+
+```
+@Repository
+@Primary
+public class UserRepoDbImpl implements UserRepo {
+
+@Repository
+public class UserRepoMongoImpl implements UserRepo {
+
+@Service
+public class AppService {
+    @Autowired
+    private UserRepo userRepo; // UserRepoDbImpl will be wired
+
+```
+
+Solution 2: @Qualifier
+
+```
+@Repository
+public class UserRepoDbImpl implements UserRepo{
+
+@Repository
+public class UserRepoMongoImpl implements UserRepo{
+
+@Service
+public class AppService {
+    @Autowired
+    @Qualifier("userRepoDbImpl")
+    private UserRepo userRepo;
+
+
+@Service
+public class AdminService {
+    @Autowired
+    @Qualifier("userRepoMongoImpl")
+    private UserRepo userRepo;
+```
+
+Solution 3: using @Profile
+
+```
+@Repository
+@Profile("dev")
+public class UserRepoDbImpl implements UserRepo{
+
+@Repository
+@Profile("prod")
+public class UserRepoMongoImpl implements UserRepo{
+
+
+@Service
+public class AdminService {
+    @Autowired
+    private UserRepo userRepo;
+
+Option 1: use application.properties
+spring.profiles.active=dev
+
+Option 2: Program arguments
+More Run Configuration -> Modify Run Configuration -> Active profile = dev or prod
+java -Dspring.profiles.active=prod com.cisco.demo.DemoApplication
+
+```
+
+Solution 4: using @ConditionalOnMissingBean
+
+```
+@Repository
+public class UserRepoMongoImpl implements UserRepo{
+
+@Repository
+@ConditionalOnMissingBean(name="userRepoMongoImpl")
+public class UserRepoDbImpl implements UserRepo{
+
+@Service
+public class AdminService {
+    @Autowired
+    private UserRepo userRepo;
+
+```
