@@ -227,3 +227,10 @@ Alternate: Toplink / KODO / JDO / OpenJPA ....
 
 =================================
 
+SpringApplication.run(DemoApplication.class, args); is similar to    new AnnotationConfigApplicationContext();
+
+@SpringBootApplication is 3 in 1
+1) @Configuration
+2) @ComponentScan(basePackage="com.cisco.demo")
+3) @EnableAutoConfiguration
+
