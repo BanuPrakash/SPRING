@@ -4,6 +4,7 @@ import com.cisco.shopapp.entity.Customer;
 import com.cisco.shopapp.entity.Product;
 import com.cisco.shopapp.repo.CustomerRepo;
 import com.cisco.shopapp.repo.ProductRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,14 @@ public class OrderService {
     // Constructor DI instead of setter using @Autowired
     private final ProductRepo productRepo;
     public final CustomerRepo customerRepo;
+
+    // method for custom mutation
+    @Transactional
+    public Product modifyProductPrice(int id, double price) {
+        productRepo.modifyProductPrice(id, price);
+        return getProductById(id);
+    }
+
 
     public Product addProduct(Product product) {
         return productRepo.save(product);

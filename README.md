@@ -460,3 +460,74 @@ Issues to resolve if any with lombok:
 Settings --> Build, Execution, Deployment --> Compiler ->Annotation Processor --> shopapp -> Obtain processors from classpath.
 
 2) mvn clean
+
+==================
+insert into customers values ('danny@cisco.com','Danny','Peter');
+
+mysql> insert into customers values ('ria@cisco.com','Ria','Patel');
+
+
+mysql> insert into customers values ('anne@cisco.com','Anne','Hathaway');
+
+SQL uses table and column names
+
+JP-QL uses class and field names; case sensitive; Polymorphic
+
+```
+@Entity
+@Table(name="products")
+class Product {
+}
+@Entity
+@Table(name="tvs)
+class Tv extends Product {
+}
+@Entity
+@Table(name="mobiles")
+class Mobile extends Product {
+
+}
+from Product; gets all records from products, "tvs" and "mobiles"
+from Object; // records from all tables in database
+```
+
+By default built-in JpaRepository mutation code is Transactional.
+
+Programmatic Transaction
+```
+    JDBC:
+    public void doTask(...) {
+        Connection con = ...
+        try {
+            con.setAutoCommit(false);
+                // perform CRUD operations
+
+            con.commit();
+        } catch(SQLException ex) {
+            con.rollback();
+        }
+    }
+
+    Hibernate:
+      public void doTask(...) {
+        Session session = sessionFactory.getSession();
+        Transaction tx = session.beginTransaction();
+        try {
+           
+            session.save(e1);
+            session.merge(e2);
+            tx.commit();
+        } catch(HibernateException ex) {
+            tx.rollback();
+        }
+      }
+```
+Declarative Transaction:
+
+```
+@Transactional
+public void doTask(...) {
+    // JDBC / Hibernate / TopLink
+}
+
+```

@@ -15,13 +15,18 @@ import java.util.List;
 public class ProductClient implements CommandLineRunner {
     private final OrderService service; // wired using Constructor
 
-    // call this method once after spring container is created and initialized
+    //  this method will be called once after spring container is created and initialized
     @Override
     public void run(String... args) throws Exception {
-        addProducts();
-        printProducts();
+//        addProducts();
+        modifyPrice();
+//        printProducts();
     }
 
+    private void modifyPrice(){
+        Product p = service.modifyProductPrice(3, 4500.00);
+        System.out.println(p);
+    }
     private void addProducts() {
         if(service.getProductsCount() == 0) {
             service.addProduct(Product.builder().name("iPhone 16").price(89000.00).build());
