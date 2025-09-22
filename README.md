@@ -329,3 +329,10 @@ public class AdminService {
     private UserRepo userRepo;
 
 ```
+
+==============
+
+Factory Methods wrt Spring:
+1) 3rd party classes to be used in Spring Container
+2) Object instantiate and intialize is not straight forward.
+
