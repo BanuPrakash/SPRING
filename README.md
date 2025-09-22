@@ -29,7 +29,7 @@ https://mydeveloperplanet.com/2022/04/05/how-to-manage-your-jdks-with-sdkman/#:~
 
 3) MySQL  [ Prefer on Docker]
 
-Install Docker Desktop
+Install Docker Desktop / PODMAN
 
 Docker steps:
 
@@ -53,3 +53,177 @@ bash terminal> mysql -u "root" -p
 mysql> exit
 
 ```
+
+Spring Boot 3.5 version needs JDK 17 version
+
+Introduction to Spring Framework and Spring Boot.
+RDBMS and JPA
+Building RESTful WebServices
+* AOP
+* Exception Handling
+* Micrometer
+* Cache
+* HATEOAS
+* Async operations
+Security
+
+===================================================
+
+SOLID Design Principles
+S - Single Responsibility
+O - Open close Principle
+L - Liskov Substitution
+I - Interface seggretgation
+D - Dependency Injection
+
+========
+Container is a layer/application on top of JRE.
+Servlet Container / EJB Container
+Java 1.2 - Bean is a resuable software component
+
+Spring Framework provides container.
+- Life Cycle management of beans [instantiate, destroy]
+- Bean: any object managed by spring container
+- Wiring dependencies
+
+Spring needs metadata in the form of XML / Annotation
+
+```
+    interface EmployeeDao {
+        void addEmployee(Employee employee);
+    }
+
+    public class EmployeeDaoDbImpl implements EmployeeDao {
+        // ..
+        public void addEmployee(Employee employee) {
+            ..
+        }
+    }
+
+     public class EmployeeDaoMongoImpl implements EmployeeDao {
+        // ...
+        public void addEmployee(Employee employee) {
+            ..
+        }
+    }
+
+    public class AppService {
+        private EmployeeDao employeeDao;
+
+        private void setEmpDao(EmployeeDao edao) {
+            this.employeeDao = edao;
+        }
+
+        public void doTask(Employee e) {
+            employeeDao.addEmployee(e);
+        }
+    }
+```
+
+XML as metadata for Spring
+beans.xml
+```
+    <beans>
+        <bean id="rdbms" class="pkg.EmployeeDaoDbImpl" />
+        <bean id="mongo" class="pkg.EmployeeDaoMongoImpl" />
+        <bean id="service" class="pkg.AppService">
+            <property name="empDao" ref="mongo" />
+        </bean>
+    </beans>
+
+    // Internals
+  // SAX Parser - Runtime
+  Object rdbms = Class.forName("pkg.EmployeeDaoDbImpl").getConstructor().newInstance();
+  Object mongo = Class.forName("pkg.EmployeeDaoDbImpl").getConstructor().newInstance();
+  Object service = Class.forName("pkg.AppService").getConstructor().newInstance();
+  service.setEmpDao(mongo);
+
+  ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml", ""); 
+
+  AppService service = ctx.getBean("service", AppService.class); 
+```
+
+Annotation as metadata: Preffered
+Spring looks for the following annotations at type level and instantiates the beans:
+1) @Component [util / helpers]
+2) @Repository [persistence store]
+3) @Service 
+4) @Controller [ traditional web applications]
+5) @RestController [ RESTful Web services]
+6) @Configuration [ read config files, factory methods, ..]
+7) @ControllerAdvice [ Global exception handlers ]
+8) @ShellComponent [ spring boot 3.5 version onwards] [ Creating Shell Commands - REPL]
+
+Spring uses @Autowired or Constructor Dependency Injection
+
+Java 1.5 version onwards annotation is integral
+
+```
+   interface EmployeeDao {
+        void addEmployee(Employee employee);
+    }
+
+    @Repository
+    public class EmployeeDaoDbImpl implements EmployeeDao {
+        // ..
+        public void addEmployee(Employee employee) {
+            ..
+        }
+    }
+
+    @Service
+    public class AppService {
+        @Autowired
+        private EmployeeDao employeeDao;
+
+        public void doTask(Employee e) {
+            employeeDao.addEmployee(e);
+        }
+    }
+
+     ApplicationContext ctx = new AnnotationConfigApplicationContext();
+     ctx.scan("com.cisco.prj"); // takes care of sub-packages 
+     ctx.refresh();
+```
+
+A key benefit of using @Repository is that it enables Spring's exception translation mechanism.
+
+https://github.com/spring-projects/spring-framework/blob/main/spring-jdbc/src/main/resources/org/springframework/jdbc/support/sql-error-codes.xml
+
+```
+    try {
+
+
+    } catch(SQLException exception) {
+        if(exception.getErrorCode() == 1605) {
+            throw new DuplicateKeyException("Product with the ID : " + id + " already exists!!");
+        } else if(exception.getErrorCode() === ..) {
+
+        }
+    }
+```
+
+Spring Boot Framework:
+Framework on top of Spring Framework.
+Spring Boot 2 built on top of Spring Framework 5.x
+Spring Boot 3 is built ont top of Spring Framework 6.x
+
+Why Spring Boot?
+* Highly Opiniated Framework, lots of config comes out of the box
+- assume we are building web based application
+1) Configures Embedded Tomcat Servlet Container / web server out of the box
+Alternatives: Jetty / Netty 
+2) Provides JACKSON library for Java to JSON and JSON to Java conversion
+Alternates: Jettison / GSON / MOXY
+3) Provides DispatcherServlet as FrontController
+
+- assume we are building JPA / ORM based application
+1) provides Database Connection Pooling using HikariCP library
+ Alternate : C3p0/ DriverManagerDataSource ...
+2) Uses Hibernate as ORM provider
+Alternate: Toplink / KODO / JDO / OpenJPA ....
+
+* Easy to Dockerize
+
+=================================
+
