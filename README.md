@@ -770,3 +770,7 @@ Weaving: The process of integrating the aspects into the core application code, 
 https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/pointcuts.html
 
 ```
+
+@ControllerAdvice is an AfterThrowing Advice which is meant for Global Exception handler;
+Any exceptions thrown from @Controller or @RestController classes are progated to this class
+

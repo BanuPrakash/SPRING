@@ -1,6 +1,7 @@
 package com.cisco.shopapp.client;
 
 import com.cisco.shopapp.entity.Product;
+import com.cisco.shopapp.exceptions.EntityNotFoundException;
 import com.cisco.shopapp.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -23,7 +24,7 @@ public class ProductClient implements CommandLineRunner {
 //        printProducts();
     }
 
-    private void modifyPrice(){
+    private void modifyPrice() throws EntityNotFoundException {
         Product p = service.modifyProductPrice(3, 4500.00);
         System.out.println(p);
     }

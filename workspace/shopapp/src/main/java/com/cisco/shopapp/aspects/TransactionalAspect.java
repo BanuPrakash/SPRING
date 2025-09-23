@@ -21,6 +21,7 @@ public class TransactionalAspect {
             logger.info("Transaction success!!!");
         } catch (Exception ex) {
             logger.info("Transaction rollback!!!");
+            throw  ex;
         }
         return  ret;
     }

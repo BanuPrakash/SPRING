@@ -2,10 +2,7 @@ package com.cisco.shopapp.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,6 +26,11 @@ public class LogAspect {
     @After("execution(* com.cisco.shopapp.service.*.*(..))")
     public void logAfter(JoinPoint point) {
         logger.info("**********");
+    }
+
+    @AfterThrowing(value = "execution(* com.cisco.shopapp.service.*.*(..))", throwing = "ex")
+    public void logException(Exception ex) {
+        logger.info(ex.getMessage());
     }
 
     @Around("execution(* com.cisco.shopapp.service.*.*(..))")

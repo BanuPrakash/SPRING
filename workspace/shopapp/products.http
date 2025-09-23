@@ -7,7 +7,7 @@ GET http://localhost:8080/api/products?low=1000&high=9999
 Accept: application/json
 
 ### @name="GET PRODUCT By ID"
-GET http://localhost:8080/api/products/2
+GET http://localhost:8080/api/products/245
 Accept: application/json
 
 ### @name="ADD PRODUCT"

@@ -1,6 +1,7 @@
 package com.cisco.shopapp.api;
 
 import com.cisco.shopapp.entity.Order;
+import com.cisco.shopapp.exceptions.EntityNotFoundException;
 import com.cisco.shopapp.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class OrderController {
     // POST  http://localhost:8080/api/orders
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public String placeOrder(@RequestBody Order order) {
+    public String placeOrder(@RequestBody Order order) throws EntityNotFoundException  {
         return service.placeOrder(order);
     }
 }

@@ -5,6 +5,7 @@ import com.cisco.shopapp.entity.Customer;
 import com.cisco.shopapp.entity.LineItem;
 import com.cisco.shopapp.entity.Order;
 import com.cisco.shopapp.entity.Product;
+import com.cisco.shopapp.exceptions.EntityNotFoundException;
 import com.cisco.shopapp.repo.CustomerRepo;
 import com.cisco.shopapp.repo.OrderRepo;
 import com.cisco.shopapp.repo.ProductRepo;
@@ -34,7 +35,7 @@ public class OrderService {
      */
     // place order, atomic operation
     @Transactional
-    public String placeOrder(Order order) {
+    public String placeOrder(Order order) throws  EntityNotFoundException {
         double total = 0.0;
         for (LineItem item: order.getItems()) {
             Product product = getProductById(item.getProduct().getId());
@@ -56,7 +57,7 @@ public class OrderService {
 
     // method for custom mutation
     @Transactional
-    public Product modifyProductPrice(int id, double price) {
+    public Product modifyProductPrice(int id, double price) throws  EntityNotFoundException {
         productRepo.modifyProductPrice(id, price);
 //        throw  new IllegalArgumentException("Some thing went wrong:-(");
         return getProductById(id);
@@ -81,13 +82,12 @@ public class OrderService {
     }
 
     @Tx
-    public Product getProductById(int id) {
+    public Product getProductById(int id) throws  EntityNotFoundException{
         Optional<Product> optProduct = productRepo.findById(id);
         if(optProduct.isPresent()) {
             return optProduct.get();
-        } else {
-            return  null; // change to exception later
         }
+        throw new EntityNotFoundException("Product with ID : " + id + " doesn't exist!!!");
     }
 
     public long getProductsCount() {
