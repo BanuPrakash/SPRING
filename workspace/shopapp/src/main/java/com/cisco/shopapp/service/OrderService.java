@@ -94,4 +94,8 @@ public class OrderService {
     public long getCustomersCount() {
         return customerRepo.count();
     }
+
+    public List<Product> getByRange(double low, double high) {
+        return productRepo.findByPriceBetween(low, high);
+    }
 }

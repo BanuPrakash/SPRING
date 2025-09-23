@@ -1,0 +1,16 @@
+### @name =" GET all orders"
+GET http://localhost:8080/api/orders
+Accept: application/json
+
+### @name="Place Order"
+POST http://localhost:8080/api/orders
+Accept: text/plain
+Content-Type: application/json
+
+{
+  "customer": {"email":"ria@cisco.com"},
+  "items": [
+    {"product": {"id":4}, "quantity" : 2},
+    {"product": {"id":1}, "quantity" : 1}
+  ]
+}
