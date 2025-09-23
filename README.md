@@ -531,3 +531,51 @@ public void doTask(...) {
 }
 
 ```
+
+Day 1 Recap:
+
+Spring Framework vs Spring Boot
+* Spring Core Module: Life cycle management of bean and Wiring dependencies.
+* Spring Data JPA Module: HikariCP as database Connection pool and Hibernate as JPAVendor.
+* @Entity, PersistenceContext, @Id, @Column, @Table ORM mapping
+* JpaRepository interface - predefined Methods for CRUD operations
+* JPA Projections using findByXXXX
+* @Query for writing custom queries using SQL / JP-QL
+* @Modifying
+* @Transactional - Custom way of mutation / Insert
+
+Built-in methods for INSERT / DELETE in JpaRepository have autocommit enabled.
+
+productRepo.save(product); -- here in save() method they have turned on autocommit
+
+By default for any other methods we are writing auto-commit is false
+
+By placing    @Transactional, this Aspect works like
+* if there are no exceptions on the method which has    @Transactional it commits else rollback
+
+// Atomic 
+@Transactional
+doTask() {
+    oper1
+    oper2
+    oper3
+}
+======================
+
+Day 2:
+update products set qty = 100 where 1 = 1;
+
+Mapping associations:
+1) one to many
+2) many to one
+3) many to many
+4) one to one
+
+https://www.database-answers.com/data_models/
+
+Root aggregate of DDD:
+https://martinfowler.com/bliki/BoundedContext.html
+
+
+@JoinColumn with @ManytoOne introduces FK in owning table/entity
+@JoinColumn with @OneToMany introduces FK in child table/entity

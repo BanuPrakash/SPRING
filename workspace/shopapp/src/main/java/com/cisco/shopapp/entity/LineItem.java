@@ -12,16 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 
 @Entity
-@Table(name="products")
-public class Product {
+@Table(name="line_items")
+public class LineItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
-    private int id;
-
-    private String name;
-
-    private double price;
-
-    @Column(name="qty")
-    private int quantity;
+    @Column(name="item_id")
+    private int itemId;
 }

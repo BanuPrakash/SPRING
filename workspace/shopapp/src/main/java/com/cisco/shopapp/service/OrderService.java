@@ -22,6 +22,7 @@ public class OrderService {
     @Transactional
     public Product modifyProductPrice(int id, double price) {
         productRepo.modifyProductPrice(id, price);
+//        throw  new IllegalArgumentException("Some thing went wrong:-(");
         return getProductById(id);
     }
 

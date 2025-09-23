@@ -20,4 +20,5 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 //    @Query(value = "update products set price = :pr where id = :id", nativeQuery=true)
     @Query("update Product set price = :pr where id = :id")
     void modifyProductPrice(@Param("id") int id, @Param("pr") double price);
+
 }
