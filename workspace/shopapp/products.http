@@ -1,0 +1,22 @@
+### @name="GET PRODUCTS"
+GET http://localhost:8080/api/products
+Accept: application/json
+
+### @name="GET PRODUCT By ID"
+GET http://localhost:8080/api/products/2
+Accept: application/json
+
+### @name="ADD PRODUCT"
+POST http://localhost:8080/api/products
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "LG AC",
+  "price": 45000.00,
+  "quantity": 100
+}
+
+### @name="update product price"
+PATCH  http://localhost:8080/api/products/1?price=78909.34
+Accept: application/json

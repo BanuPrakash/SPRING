@@ -49,6 +49,9 @@ public class OrderService {
         return "Order Placed!!!";
     }
 
+    public List<Order> getOrders(){
+        return orderRepo.findAll();
+    }
 
     // method for custom mutation
     @Transactional

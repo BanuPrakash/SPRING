@@ -1,0 +1,53 @@
+package com.cisco.shopapp.api;
+
+import com.cisco.shopapp.entity.Product;
+import com.cisco.shopapp.service.OrderService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/products")
+@RequiredArgsConstructor
+public class ProductController {
+    private final OrderService service;
+
+    // GET http://localhost:8080/api/products
+    @GetMapping()
+    public List<Product> getProducts() {
+        return service.getProducts();
+    }
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED) // 201
+    public Product addProduct(@RequestBody Product product) {
+        return  service.addProduct(product);
+    }
+
+    // GET http://localhost:8080/api/products/3
+    @GetMapping("/{pid}")
+    public Product getById(@PathVariable("pid") int id) {
+        return service.getProductById(id);
+    }
+
+    // PATCH http://localhost:8080/api/products/3?price=3999.20
+    @PatchMapping("/{pid}")
+    public Product updateProductPrice(@PathVariable("pid") int id, @RequestParam("price") double price) {
+        return service.modifyProductPrice(id, price);
+    }
+
+    // PUT http://localhost:8080/api/products/3
+    /*
+        {
+            "price": 9914.99,
+            "quantity": 98
+        }
+     */
+    @PutMapping("/{pid}")
+    public Product modifyPrice(@PathVariable("pid") int id, @RequestBody Product product) {
+        //
+        return null;
+    }
+}

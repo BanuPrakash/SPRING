@@ -644,3 +644,63 @@ gets line items also for the given order because of EAGER fetching
 
 Dirty Checking:
 Withing @Transactional boundary if an entity becomes dirty [change], automatically JPA/ORM will trigger UPDATE SQL for that entity
+
+=========
+
+Building RESTful Web services using Spring MVC Module
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+ </dependency>
+```
+Provides:
+1) Tomcat as Embedded Servlet Container / Server
+2) Jackson for java to json and json to java conversion
+3) Provides DispatcherServlet as Front Controller and HandlerMapping
+
+GET http://localhost:8080/api/products
+Accept: application/json
+```
+    @RestController
+    @RequestMapping("api/products")
+    @RequiredArgsConstructor
+    public class ProductController {
+        private final OrderService service;
+
+        @GetMapping()
+        public List<Product> getProducts() {
+            return service.getProducts();
+        }
+    }
+```
+SSR: server side rendering
+* Presentation pages are sent to client - HTML / PDF
+* clients are thin [ like just a browser]
+* Heavy payload [ whole pdf / html is sent between client and server]
+* Client needs to understand how to handle HTML / PDF..
+* Good for SEO
+
+CSR: Client side Rendering
+* different formats of representation is sent to clients: JSON / XML
+* thin payload
+* each client can consume data and generate views
+* Heavy clients [ need an application ] in client machine
+
+
+RESTful WS:
+REpresentational State Transfer.
+* Resource: anything which can be named and present on server [ image / file / database / printer]
+* Representation: state of resource at a given point [ printer is on / off / paused]
+data in a row of table
+* ContentNegotiation: based on HttpHeaders - Accept and Content-type the representation is converted into various formats like JSON / XML / CSV ...
+
+Characteristics of REST.
+1) Uniform Identifier: uses URL to identify a resource, HTTP methods GET / POST / PUT / PATCH / DELETE used to perform actions
+2) Client Server architecture: clients can evolve seperatly
+3) Stateless
+4) Layered
+
+Content-type: application/json
+
+PUT requests replace an entire resource with the data provided, while PATCH requests apply only partial updates to a resource, modifying only the fields sent in the request. 
