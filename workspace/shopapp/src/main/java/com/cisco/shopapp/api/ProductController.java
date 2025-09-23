@@ -3,6 +3,7 @@ package com.cisco.shopapp.api;
 import com.cisco.shopapp.entity.Product;
 import com.cisco.shopapp.exceptions.EntityNotFoundException;
 import com.cisco.shopapp.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ProductController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED) // 201
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@RequestBody @Valid Product product) {
         return  service.addProduct(product);
     }
 

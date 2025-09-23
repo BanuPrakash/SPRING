@@ -774,3 +774,28 @@ https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/pointcuts.h
 @ControllerAdvice is an AfterThrowing Advice which is meant for Global Exception handler;
 Any exceptions thrown from @Controller or @RestController classes are progated to this class
 
+---------------
+
+Validation of Payload:
+```
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+  </dependency>
+
+public Product addProduct(@RequestBody @Valid Product product) {
+
+@Valid makes of validation constraints...
+    @NotBlank(message = "Name is required!!!")
+    private String name;
+
+```
+
+MethodArgumentNotValidException: 
+
+Validation failed with 3 errors: 
+[Field error in object 'product' on field 'price': rejected value [-45000.0]; codes [Min.product.price,Min.price,Min.double,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [product.price,price]; arguments []; default message [price],10]; default message [Price -45000.0 should be more than 10]] 
+
+[Field error in object 'product' on field 'quantity': rejected value [0]; codes [Min.product.quantity,Min.quantity,Min.int,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [product.quantity,quantity]; arguments []; default message [quantity],1]; default message [Quantity 0 should be more than 1]] 
+
+[Field error in object 'product' on field 'name': rejected value []; codes [NotBlank.product.name,NotBlank.name,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [product.name,name]; arguments []; default message [name]]; default message [Name is required!!!]] ]
