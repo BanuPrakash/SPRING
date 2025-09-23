@@ -1,5 +1,6 @@
 package com.cisco.shopapp.service;
 
+import com.cisco.shopapp.aspects.Tx;
 import com.cisco.shopapp.entity.Customer;
 import com.cisco.shopapp.entity.LineItem;
 import com.cisco.shopapp.entity.Order;
@@ -70,6 +71,7 @@ public class OrderService {
         return customerRepo.save(customer);
     }
 
+    @Tx
     public List<Product> getProducts() {
         return  productRepo.findAll();
     }
@@ -78,6 +80,7 @@ public class OrderService {
         return customerRepo.findAll();
     }
 
+    @Tx
     public Product getProductById(int id) {
         Optional<Product> optProduct = productRepo.findById(id);
         if(optProduct.isPresent()) {
