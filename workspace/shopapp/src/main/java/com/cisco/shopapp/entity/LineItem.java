@@ -18,4 +18,12 @@ public class LineItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     @Column(name="item_id")
     private int itemId;
+
+    @ManyToOne
+    @JoinColumn(name="product_fk")
+    private Product product; // line item of a given Product
+
+    private int quantity;
+
+    private double amount;
 }

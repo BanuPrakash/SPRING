@@ -579,3 +579,65 @@ https://martinfowler.com/bliki/BoundedContext.html
 
 @JoinColumn with @ManytoOne introduces FK in owning table/entity
 @JoinColumn with @OneToMany introduces FK in child table/entity
+
+==========
+
+Without Cascade Operations:
+One order has 4 line items
+```
+    @OneToMany
+    @JoinColumn(name="order_fk")
+    private List<LineItem> items = new ArrayList<>();
+
+Save operation:
+orderRepo.save(order);
+itemRepo.save(i1);
+itemRepo.save(i2);
+itemRepo.save(i3);
+itemRepo.save(i4);
+
+Delete operation:
+orderRepo.delete(order);
+itemRepo.delete(i1);
+itemRepo.delete(i2);
+itemRepo.delete(i3);
+itemRepo.delete(i4);
+```
+
+With Cascade:
+One order has 4 line items
+```
+Composition and not Aggregation:
+ @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="order_fk")
+    private List<LineItem> items = new ArrayList<>();
+
+Save operation:
+orderRepo.save(order); // takes care of saving line items also
+
+Delete operation:
+orderRepo.delete(order); // takes care of deleting items also
+
+```
+
+Association: Composition or Aggregation
+
+Fetching strategies:
+1) by default one to many is Lazy fetching and many to one is EAGER fetching
+
+orderDao.findById(1);
+gets the customer data also but not line items
+
+to get line items we need
+itemDao.getItemsOfOrder(orderId); // select * from line_items where order_fk = 1;
+
+Make EAGER fetching:
+```
+@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="order_fk")
+    private List<LineItem> items = new ArrayList<>();
+
+orderDao.findById(1);
+gets the customer data also but not line items
+gets line items also for the given order because of EAGER fetching
+```

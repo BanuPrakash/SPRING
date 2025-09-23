@@ -30,7 +30,7 @@ public class Order {
     @JoinColumn(name = "customer_fk") // FK references to email of Customer
     private  Customer customer; // order is by a customer
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="order_fk")
     private List<LineItem> items = new ArrayList<>(); // order has many items
 }
