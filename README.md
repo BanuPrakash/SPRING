@@ -704,3 +704,67 @@ Characteristics of REST.
 Content-type: application/json
 
 PUT requests replace an entire resource with the data provided, while PATCH requests apply only partial updates to a resource, modifying only the fields sent in the request. 
+
+Task: CustomerController
+* getAllCustomers
+* getCustomer by Email
+* register a new Customer [ add]
+
+=================
+
+PUT / PATCH / JSON-PATCH
+```
+A JSON Patch document is itself a JSON array containing a sequence of operations. Each operation specifies a particular type of change and uses JSON Pointer (RFC 6901) to identify the specific part of the document to be modified. 
+
+Key Operations in JSON Patch:
+add: Adds a new value to an object or an element to an array.
+remove: Removes a value from an object or an element from an array.
+replace: Replaces an existing value.
+move: Moves a value from one location to another within the document.
+copy: Copies a value from one location to another within the document.
+test: Tests if a value at a specified path matches a given value. If the test fails, the entire patch operation should abort.
+
+Advantages of JSON Patch:
+Reduced Bandwidth: Only the changes are sent, not the entire document.
+Improved Performance: Efficient for applying partial updates.
+Standardized Format: Ensures interoperability between different systems.
+Fine-grained Control: Allows for precise manipulation of individual elements and properties, including within arrays.
+
+```
+
+AOP: Aspect Oriented Programming
+
+```
+Aspects: These are modules that encapsulate cross-cutting concerns. They are not a part of main business logic, but can be used along with business logic. Examples: log, profile, security, transaction
+cross-cutting concerns leads to Code tangling and code scattering
+
+public void transferFunds(Account fromAcc, Account toAcc, double amt) {
+    long startTime = System.currentTimeInMillis(); // profile
+    if(ctx.getPrinciple().hasPermission()) { // security
+        Transaction tx = ctx.getTransaction(); // transaction
+        log.info("transaction started!!!");
+        fromAcc.debit(amt);
+        log.info("amount debit done..");
+        toAcc.credit(amt);
+        log.info("amount credit done..");
+        insertIntoTxTable(data);
+        log.info("update TX history");
+        tx.commit();  // transaction
+    }
+    long endTime = System.currentTimeInMillis(); // profile
+    log.info("Tx compleed in : " ( endTime - startTime) + " ms");
+}
+
+Join Points: Specific points within the execution of a program where an aspect can be applied, such as method execution and exception. 
+
+
+Pointcuts: These are expressions that define precisely where an advice should be executed, for example, "before every method call on a class starting with 'UserService'". 
+
+
+
+
+Advice: how we weave an aspect to JoinPoint: Before, After, Around, AfterReturning, AfterThrowing
+
+Weaving: The process of integrating the aspects into the core application code, either at compile-time, load-time, or run-time. 
+
+```
