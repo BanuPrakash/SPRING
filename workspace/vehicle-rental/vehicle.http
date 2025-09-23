@@ -1,0 +1,53 @@
+### @name="GET all Vehicles"
+GET http://localhost:8080/api/vehicles
+Accept: application/json
+
+
+### @name="GET Vehicles by Fuel Type"
+GET http://localhost:8080/api/vehicles?type=PETROL
+Accept: application/json
+
+
+### @name="GET Vehicle by registration number"
+GET http://localhost:8080/api/vehicles/KA-05-AB-1234
+Accept: application/json
+
+
+### @name="add a Vehicle"
+POST http://localhost:8080/api/vehicles
+Accept: application/json
+Content-Type: application/json
+
+{
+  "registrationNumber": "AP-09-AA-1111",
+  "fuelType": "DIESEL",
+  "dailyHireRate": 3500.00
+}
+
+
+### @name="update hire rate of Vehicle
+PATCH http://localhost:8080/api/vehicles/KA-05-AB-1234?cost=9812.11
+Accept:application/json
+
+#
+#PUT http://localhost:8080/api/vehicles/KA-05-AB-1234
+#Accept:application/json
+#Content-type:application/json
+#
+#{
+# "dailyHireRate": 9821.33,
+# "fuelType": "GAS"
+#}
+
+
+
+### @name="add invalid Vehicle"
+POST http://localhost:8080/api/vehicles
+Accept: application/json
+Content-Type: application/json
+
+{
+  "registrationNumber": "AP-09-AA-1234",
+
+  "dailyHireRate": 3999.00
+}

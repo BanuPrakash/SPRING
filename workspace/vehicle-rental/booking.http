@@ -1,0 +1,24 @@
+### @name="Book a Vehicle"
+POST  http://localhost:8080/api/bookings
+Accept: text/plain
+Content-Type: application/json
+
+{
+  "customer": {
+      "email": "roger@adobe.com"
+  },
+  "vehicle": {
+    "registrationNumber": "DH-10-AA-0434"
+  },
+  "dateFrom": "2025-08-20"
+}
+
+
+
+### @name="Return a Vehicle"
+PATCH http://localhost:8080/api/bookings/2?returnDate=21-08-2025
+Accept: text/plain
+
+### @name="GET all Bookings/Rentals"
+GET http://localhost:8080/api/bookings
+Accept: application/json

@@ -791,11 +791,53 @@ public Product addProduct(@RequestBody @Valid Product product) {
 
 ```
 
-MethodArgumentNotValidException: 
+Task : ticket Tracker application
 
-Validation failed with 3 errors: 
-[Field error in object 'product' on field 'price': rejected value [-45000.0]; codes [Min.product.price,Min.price,Min.double,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [product.price,price]; arguments []; default message [price],10]; default message [Price -45000.0 should be more than 10]] 
+```
+    employees
+    email       | first_name | last_name | hire_date 
+    a@cisco.com
+    b@cisco.com
+    c@cisco.com
 
-[Field error in object 'product' on field 'quantity': rejected value [0]; codes [Min.product.quantity,Min.quantity,Min.int,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [product.quantity,quantity]; arguments []; default message [quantity],1]; default message [Quantity 0 should be more than 1]] 
+    tickets
+    ticket_id | raised_by_fk | raised_date | issue | resolved_by | resolved_date | fix
 
-[Field error in object 'product' on field 'name': rejected value []; codes [NotBlank.product.name,NotBlank.name,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [product.name,name]; arguments []; default message [name]]; default message [Name is required!!!]] ]
+
+Use case 1: Raise a Ticket
+ tickets
+    ticket_id | raised_by_fk | raised_date          | issue         | resolved_by | resolved_date | fix
+    134         b@cisco.com     22-SEP-2025 3:44      IntelliJ Hangs.  NULL.        NULL.          NULL
+
+Use case 2: Resolve ticket
+Pick a ticket to resolve -> input will be ticket ID
+Make use of Dirty Checking capability
+* pull the ticket based on Ticket ID
+* set resolvedBy, resolvedDate [ system date], fix
+
+ tickets
+    ticket_id | raised_by_fk | raised_date          | issue         | resolved_by | resolved_date | fix
+    134         b@cisco.com     22-SEP-2025 3:44      IntelliJ Hangs.   c@cisco       23-sep-2025 4:11          Applied patch
+
+
+Hint:
+Ticket class
+@ManyToOne
+@Joincolumn(name="raised_by_fk")
+Employee raisedBy;
+
+@ManyToOne
+@JoinColumn(name="resolved_by")
+Employee resolvedBy
+
+
+```
+
+Day 3:
+1) Testing 
+2) Caching
+3) HATEOAS
+4) MicroMeter, Actuator
+5) Swagger
+6) Async
+
