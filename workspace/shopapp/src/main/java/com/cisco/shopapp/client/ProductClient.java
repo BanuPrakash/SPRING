@@ -19,7 +19,7 @@ public class ProductClient implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        addProducts();
-        modifyPrice();
+//        modifyPrice();
 //        printProducts();
     }
 

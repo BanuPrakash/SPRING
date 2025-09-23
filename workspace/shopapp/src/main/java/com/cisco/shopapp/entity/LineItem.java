@@ -25,5 +25,5 @@ public class LineItem {
 
     private int quantity;
 
-    private double amount;
+    private double amount; // computed
 }

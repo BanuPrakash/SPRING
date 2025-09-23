@@ -641,3 +641,6 @@ orderDao.findById(1);
 gets the customer data also but not line items
 gets line items also for the given order because of EAGER fetching
 ```
+
+Dirty Checking:
+Withing @Transactional boundary if an entity becomes dirty [change], automatically JPA/ORM will trigger UPDATE SQL for that entity
