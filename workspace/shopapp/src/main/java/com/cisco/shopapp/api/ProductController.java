@@ -32,7 +32,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @Tag(name = "Product API", description = "Product API Service")
 public class ProductController {
     private final OrderService service;
-
     // GET http://localhost:8080/api/products
     // GET http://localhost:8080/api/products?low=10000&high=99999
     @GetMapping()
@@ -64,6 +63,7 @@ public class ProductController {
             })
     @GetMapping("/{pid}")
     public Product getById(@PathVariable("pid") int id) throws EntityNotFoundException  {
+
         return service.getProductById(id);
     }
 

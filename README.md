@@ -1024,8 +1024,53 @@ Spring Consuming Endpoints:
 2) WebClient 
 3) RestClient [Spring Boot 3.0]
 
+===================
+
+Observability:
+Ability to measure the internal state of system
+Tells Why a System is at fault
+
+Monitoring:
+System is at fault
+Focus on collection of Data
+
+```
+Status at the current time
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+ </dependency>
+
+```
+
+management.endpoint.health.show-details=always
+management.endpoints.web.exposure.include=*
+
+http://localhost:8080/actuator
+
+http://localhost:8080/actuator/health
+
+http://localhost:8080/actuator/metrics
+
+ab -c 100 -n 200 http://localhost:8080/api/products/1
+
+http://localhost:8080/actuator/metrics/http.server.requests
 
 
+Observability:
+1) Counter: incrementating and decrementing metric that represents a count
+
+http://localhost:8080/actuator/metrics/my.counter
+
+
+2) timers: duration of events
+3) Gauges: Measure a value --> such as size of colleciton
+
+============
+
+Prometheus - Time Series database
+
+Security
 
 
 
