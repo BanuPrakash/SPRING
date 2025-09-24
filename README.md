@@ -910,8 +910,37 @@ public class AppConfig {
 
 @Cacheable(value = "productCache", key = "#id")
 @CachePut(value = "productCache", key = "#id")
+
+Redis is an in-memory key–value database, used as a distributed cache
+Cache data survies system crash
+
+docker run -p 6379:6379 -d --name some-redis  -d redis
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+ </dependency>
+spring.data.redis.host=localhost
+spring.data.redis.port=6379
+
+Serialization: process of writing state of object to a stream [ like file, Other address space.. Outside of JVM]
+public class Product implements Serializable 
+
+If NodeJS is installed: Redis Client
+
+ npx redis-commander
+
+ConcurentMapCache is a ConditionalOnMissingBean; if no other CacheManager are available this will be used.
+
+
 ```
 
 * Backend Caching: EhCache, JBossSwarmCache .... [database level]
+
+==================
+
+Resume @ 11:35 - 20 min break
+
+
+
 
 
