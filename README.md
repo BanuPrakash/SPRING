@@ -954,8 +954,34 @@ List<Product> -> CollectionModel<List<Product>>
  Affordance : Characteristics about how an object can be used.
  @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
 
- 
 ```
+
+Spring Data REST: unmbrella project on top of Spring Data Repository and MVC module.
+Spring DATA REST builds endpoints based on repository interface and add Links [ HATEOAS]
+* No need to write and @RestController or @Service classes, just JpaRepository will do.
+* Spring Data RESt doesn't support @RestController
+
+-------
+
+Spring boot application:
+* Lombok
+* MySQL
+* JPA
+* Rest Repositories
+* web
+
+http://localhost:8080/products
+http://localhost:8080/products/search/findByPriceBetween?low=10000&high=50000
+http://localhost:8080/products/search/findByPriceGreaterThan?price=10000
+
+How to do Customization?
+@BasePathAwareController instead of @RestController
+
+
+
+
+
+
 
 
 

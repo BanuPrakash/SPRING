@@ -1,6 +1,6 @@
-package com.cisco.shopapp.repo;
+package com.cisco.datarest.repo;
 
-import com.cisco.shopapp.entity.Product;
+import com.cisco.datarest.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
