@@ -862,7 +862,6 @@ Vehicle Rental Application
 bookings
 id | customer_fk | vehicle_fk | date_from | date_to | amount
 
-
 select
          v1_0.reg_no,
             v1_0.fuel_type,
@@ -880,4 +879,13 @@ select
             customers c1_0
                 on c1_0.email=b1_0.customer_fk
 ```
+
+API Documentation:
+* RAML
+* OpenAPI - Swagger springdoc-openapi
+https://springdoc.org/
+
+http://localhost:8080/v3/api-docs
+http://localhost:8080/swagger-ui/index.html
+
 
