@@ -833,11 +833,51 @@ Employee resolvedBy
 
 ```
 
+Recap Day 2:
+* Building RESTful WS
+- @RestController instead of @Controller [SSR]
+- @RequestMapping : Map a REQUEST URL to a Resource [ class]
+- @GetMapping(), @PostMapping(), @PutMapping(), @PatchMapping(), JSON-PATCH [ array of json operations]
+, @DeleteMapping()
+- @RequestBody to read payload from client
+- @RequestParam to read Query Parameters [?] http://server.com/products?page=1&size=20
+- @PathVariable to read Path parameters [/] http://server.com/products/3
+- @ResponseBody - optional to specify that the return value has to be sent as response body
+- @ResponseStatus
+
+* AOP
+- Aspect
+- JoinPoint [eligibility where aspect can be weaved; with Spring methods and exceptions]
+- PointCut [ selected JoinPoint]
+- Advice [ Before, After, Around, AfterThrowing, AfterReturning]
+- @ControllerAdvice [ built in advice works like AfterThrowing; any exceptions thrown from @Controller or @RestContoller is delegated to @ControllerAdvice]
+- Validation - jakarta.validation.constraints like @NotBlank, @Pattern, @Min, @Max, @Future, @Past ...
+- @Valid - MethodArgumentNotValidException
+
+=======================
+
 Day 3:
-1) Testing 
-2) Caching
-3) HATEOAS
-4) MicroMeter, Actuator
-5) Swagger
-6) Async
+Vehicle Rental Application
+```
+bookings
+id | customer_fk | vehicle_fk | date_from | date_to | amount
+
+
+select
+         v1_0.reg_no,
+            v1_0.fuel_type,
+            v1_0.hire_rate,
+            b1_0.date_from,
+            b1_0.date_to,
+            c1_0.fname,
+            c1_0.lname
+        from
+            bookings b1_0
+        join
+            vehicles v1_0
+                on v1_0.reg_no=b1_0.vehicle_fk
+        join
+            customers c1_0
+                on c1_0.email=b1_0.customer_fk
+```
 

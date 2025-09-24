@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="vehicles")
 public class Vehicle {
+    // KA-04-1234
+    // UP-12-AE-9891
     @Id
     @Column(name="REG_NO", length = 25)
     @Pattern(regexp="^[A-Z]{2}-[0-9]{2}-[A-Z]{0,2}-[0-9]{4}$", message = "Registration Number ${validatedValue} is not valid!!")

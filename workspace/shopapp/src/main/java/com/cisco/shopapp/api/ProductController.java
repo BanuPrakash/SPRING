@@ -3,6 +3,12 @@ package com.cisco.shopapp.api;
 import com.cisco.shopapp.entity.Product;
 import com.cisco.shopapp.exceptions.EntityNotFoundException;
 import com.cisco.shopapp.service.OrderService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/products")
 @RequiredArgsConstructor
+@Tag(name = "Product API", description = "Product API Service")
 public class ProductController {
     private final OrderService service;
 
@@ -35,6 +42,16 @@ public class ProductController {
     }
 
     // GET http://localhost:8080/api/products/3
+    @Operation(
+            description = "Service that return a Product",
+            summary = "This service returns a Product by the ID",
+            responses = {
+                    @ApiResponse(description = "Successful Operation", responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = Product.class))),
+                    @ApiResponse(responseCode = "404", description = "Product  Not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content(schema = @Schema(hidden = true)))
+            })
     @GetMapping("/{pid}")
     public Product getById(@PathVariable("pid") int id) throws EntityNotFoundException  {
         return service.getProductById(id);
@@ -53,6 +70,7 @@ public class ProductController {
             "quantity": 98
         }
      */
+    @Hidden
     @PutMapping("/{pid}")
     public Product modifyPrice(@PathVariable("pid") int id, @RequestBody Product product) {
         //
