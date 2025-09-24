@@ -1,0 +1,21 @@
+### @name="GET PRODUCT By ID ETAG"
+GET http://localhost:8080/api/products/etag/2
+Accept: application/json
+
+
+### @name="GET PRODUCT By ID"
+GET http://localhost:8080/api/products/etag/2
+Accept: application/json
+If-None-Match: "2042495742"
+
+
+### @name="GET PRODUCT By ID Cache"
+GET http://localhost:8080/api/products/cache/2
+Accept: application/json
+
+
+### @name="GET PRODUCT By ID Cache"
+GET http://localhost:8080/api/products/cache/3
+Accept: application/json
+
+

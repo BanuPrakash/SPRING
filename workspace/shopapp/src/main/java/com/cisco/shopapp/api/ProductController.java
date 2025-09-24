@@ -11,9 +11,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 
 @RestController
@@ -72,8 +79,37 @@ public class ProductController {
      */
     @Hidden
     @PutMapping("/{pid}")
+    @CachePut(value = "productCache", key = "#id")
     public Product modifyPrice(@PathVariable("pid") int id, @RequestBody Product product) {
         //
         return null;
+    }
+
+
+    // Caching
+
+    @GetMapping("/etag/{pid}")
+    public ResponseEntity<Product> getByIdEtag(@PathVariable("pid") int id) throws EntityNotFoundException  {
+        Product p =  service.getProductById(id);
+        return ResponseEntity.ok().eTag(Long.toString(p.hashCode())).body(p);
+    }
+
+    @GetMapping("/cache/{pid}")
+    @Cacheable(value = "productCache", key = "#id") // SpEL
+    // in Cache key will be id and value will be the returned data from method
+    public Product getByIdCache(@PathVariable("pid") int id) throws EntityNotFoundException  {
+        System.out.println("Cache Miss...");
+        try {
+            Thread.sleep(Duration.ofSeconds(3));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return service.getProductById(id);
+    }
+
+    @CacheEvict(value = "productCache", key="#id") // Avoid this
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable("id") int id) {
+        return  "deleted!!!";
     }
 }

@@ -886,6 +886,32 @@ API Documentation:
 https://springdoc.org/
 
 http://localhost:8080/v3/api-docs
+
 http://localhost:8080/swagger-ui/index.html
+
+====================================
+
+Caching:
+* Client-Side Caching
+    Cache-Control -- Applicable only for Browser
+    ETag - Entity Tag
+* API level Caching - Spring Boot
+```
+   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+By Default we get ConcurentMapCache - In Memory and CacheManager - Default
+
+@Configuration
+@EnableCaching
+public class AppConfig {
+}
+
+@Cacheable(value = "productCache", key = "#id")
+@CachePut(value = "productCache", key = "#id")
+```
+
+* Backend Caching: EhCache, JBossSwarmCache .... [database level]
 
 
