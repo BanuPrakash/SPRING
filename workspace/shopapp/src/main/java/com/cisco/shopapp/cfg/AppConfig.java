@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @EnableCaching
 @EnableScheduling
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
 @RequiredArgsConstructor
 public class AppConfig {
     private final CacheManager cacheManager;

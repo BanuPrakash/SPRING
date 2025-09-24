@@ -16,12 +16,15 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequestMapping("api/products")
@@ -107,9 +110,30 @@ public class ProductController {
         return service.getProductById(id);
     }
 
+    @GetMapping("/hateos/{pid}")
+    public ResponseEntity<EntityModel<Product>> getByIdHateos(@PathVariable("pid") int id) throws EntityNotFoundException  {
+        Product p =  service.getProductById(id);
+        EntityModel<Product> entityModel = EntityModel.of(p,
+                linkTo(methodOn(ProductController.class).getByIdHateos(id)).withSelfRel()
+                        .andAffordance(afford(methodOn(ProductController.class).modifyPrice(id, null)))
+                        .andAffordance(afford(methodOn(ProductController.class).deleteProduct(id))),
+                linkTo(methodOn(ProductController.class).getProducts(0,0)).withRel("products"));
+        return ResponseEntity.ok(entityModel);
+    }
+
+
+    class Response{
+        String string;
+        Response(String str) {
+            this.string = str;
+        }
+        public String toString() {
+            return string;
+        }
+    }
     @CacheEvict(value = "productCache", key="#id") // Avoid this
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable("id") int id) {
-        return  "deleted!!!";
+    public Response deleteProduct(@PathVariable("id") int id) {
+        return  new Response("deleted!!!");
     }
 }

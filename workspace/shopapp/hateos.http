@@ -1,0 +1,3 @@
+### @name="Level 3 Rest HATOEAS"
+GET http://localhost:8080/api/products/hateos/1
+Accept:

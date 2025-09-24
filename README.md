@@ -931,14 +931,31 @@ If NodeJS is installed: Redis Client
 
 ConcurentMapCache is a ConditionalOnMissingBean; if no other CacheManager are available this will be used.
 
-
 ```
-
 * Backend Caching: EhCache, JBossSwarmCache .... [database level]
-
 ==================
 
-Resume @ 11:35 - 20 min break
+HATEOAS: Hypermedia As The Extension Of Application State
+https://martinfowler.com/articles/richardsonMaturityModel.html
+
+WebMvcLinkBuilder - Builder to easily build link instances 
+RepresentationModel
+- EntityModel [Entity + links]
+Product --> EntityModel<Product>
+- CollectionModel [ collection + links]
+List<Product> -> CollectionModel<List<Product>>
+
+```
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+ </dependency>
+
+ Affordance : Characteristics about how an object can be used.
+ @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
+
+ 
+```
 
 
 
