@@ -1016,6 +1016,15 @@ Without @Async
 Bill Processed for 555 by Thread Thread[#37,http-nio-8080-exec-1,5,main]
 Notify Patient  555 by Thread : Thread[#37,http-nio-8080-exec-1,5,main]
 
+https://jsonplaceholder.typicode.com/users
+https://jsonplaceholder.typicode.com/posts
+
+Spring Consuming Endpoints:
+1) RestTemplate 
+2) WebClient 
+3) RestClient [Spring Boot 3.0]
+
+
 
 
 
