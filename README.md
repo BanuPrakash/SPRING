@@ -977,7 +977,44 @@ http://localhost:8080/products/search/findByPriceGreaterThan?price=10000
 How to do Customization?
 @BasePathAwareController instead of @RestController
 
+=======================================
 
+Spring Application Event and Async Operations.
+
+```
+class BillingService {}
+class HouseKeepingService{}
+class NotificationService{}
+class MedicalRecordService {}
+
+POST http://localhost:8080/api/discharge
+
+{
+    patientId: 1235,
+    pateientName: "George"
+}
+
+// Synchronous Blocking Code and tightly coupled
+public String dischargePatient(String id, String name) {
+    billingProcess.processBill(); // blocked
+    medicalRecordsService.updatePatientHistory(); // blocked
+    // service
+    houseKeepingService.cleanAndAssign(); // blocked
+    //notificationService.sendNotifcation(); // blocked
+}
+
+```
+@EnableAsync --> Use Thread pool [default Spring Container provides a Thread Pool, we can have our own thread pool
+This is not Tomcat Thread pool - meant to handle HTTP request]
+@EventListener
+
+With @Async
+Bill Processed for 555 by Thread Thread[#58,task-1,5,main]
+Notify Patient  555 by Thread : Thread[#59,task-2,5,main] 
+
+Without @Async
+Bill Processed for 555 by Thread Thread[#37,http-nio-8080-exec-1,5,main]
+Notify Patient  555 by Thread : Thread[#37,http-nio-8080-exec-1,5,main]
 
 
 
