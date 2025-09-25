@@ -1068,9 +1068,39 @@ http://localhost:8080/actuator/metrics/my.counter
 
 ============
 
-Prometheus - Time Series database
+Recap of Day 3:
+1) Vehicle Rental application: How to handle Date
+2) Caching: ETag, cache module --> ConcurrentMapCache, RedisCacheManager
+@EnableCaching, @Cacheable, @CachePut, @CacheEvit
+3) @EnableScheduling @Scheduled(cron = "* * * * * *")
+4) HATEOAS [ WebMvcLinkBuilder --> RepresentionModel [ data + links]]
+Spring Data REST based on HATEOAS and Spring Data Repository
+5) @EnableAsync, @Async, Spring ApplicationEvent, ApplicationEventPublisher, @EventListener
+6) Monitoring and Observability ; Actuator module --> Endpoints
 
-Security
+------------------
+
+Day 4:
+Prometheus collects and stores its metrics as time series data
+
+```
+ <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+ </dependency>
+
+Endpoint:
+http://localhost:8080/actuator/prometheus
+
+compose.yml
+docker compose up 
+docker compose down
+
+http://localhost:9090/
+
+jvm_threads_live_threads
+http_server_requests_seconds_count
+```
 
 
 
