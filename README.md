@@ -1134,6 +1134,95 @@ protected void successfulAuthentication(HttpServletRequest request,
 https://docs.spring.io/spring-security/reference/servlet/appendix/database-schema.html
 https://bcrypt-generator.com/
 
-Resume @ 11:10 [ 20 min tea break]
+================
 
+Token based authorization: JWT
+JSON Web Token (JWT)
+
+```
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+
+    HEADER:
+    {
+        "alg": "HS256",
+        "typ": "JWT"
+    }
+
+    PAYLOAD: CLAIMS
+    {
+        "sub": "harry@cisco.com",
+        "authorities": "ADMIN", "MANAGER", "GUEST",
+        "iat": 353253
+        "exp": 457323
+        "iss": "https://secure.cisco.com"
+    }
+
+    SIGNATURE:
+    HMACSHA256(
+        base64UrlEncode(header) + "." +
+        base64UrlEncode(payload),
+        topsecretsaltvalueof256characters)
+
+Scenario 1: use the same salt value to generate and validate Token
+Scenario 2: use Private key to generate Token, public key to validate token [keytool ..]
+
+http://server.com/api/products
+Accept: application/json
+Authorization: Bearer <<token>>
+
+```
+
+VehicleRentalApplication --> secure using JWT
+1) pom.xml add dependencies
+2) application.properites --> salt value
+3) added -> security package
+a) entities 
+    User and ROLE [ Many To Many relationship]
+```
+movies
+mid | name
+1       Pulp Fiction
+2       Broken Arrow
+
+actors
+aid | name
+1       John Travolta
+2       Bruce Willis
+
+movies_actors
+
+mid_fk | aid_fk
+1     1
+1     2
+2     1
+```
+b) Repo
+c) DTO
+ SignUpRequest for Registration
+ SignInRequest for Login
+d) UserDetailsServiceImpl
+e) AuthenticationService - register - signup()
+f) AuthController
+    auth/register
+    auth/login
+
+h) JwtService
+    getSigningKey() takes String Salt from application.properties --> java.security.Key
+
+
+Login:
+ AuthController [auth/login]
+ AuthenticationService - JWTService
+ Send Token To Client
+
+Access Protected Resource:
+    GET http://localhost:8080/api/vehicles
+    Accept: application/json
+    Authorization: Bearer <<token>>
+
+JwtAuthenticationFilter
+    Extract email from Token using JwtService
+    isTokenValid JwtService
+
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbm5lQGNpc2NvLmNvbSIsImlhdCI6MTc1ODc4MjI1MSwiZXhwIjoxNzU4NzgzNjkxLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sInJvbGVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwiaXNzIjoiaHR0cHM6Ly9hdXRoc2VydmVyLmNpc2NvLmNvbSJ9.bBy6YdozL-HeD1GmDp2nnD2YFc2UeunhcCEtoIhdI-I
 
