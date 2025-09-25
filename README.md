@@ -1096,6 +1096,8 @@ compose.yml
 docker compose up 
 docker compose down
 
+ab -c 100 -n 800 http://localhost:8080/api/products
+
 http://localhost:9090/
 
 jvm_threads_live_threads
@@ -1103,8 +1105,30 @@ http_server_requests_seconds_count
 ```
 
 
+Security module: Authentication and Authorization
 
+```
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+  </dependency>
+```
 
+By including above dependency:
+1) All resources become protected
+2) creates a login and logout pages
+http://localhost:8080/login
+http://localhost:8080/logout
+3) creates a single user
+username: user
+password: <<generated password>>
+Using generated security password: 569f2528-69f9-4255-8a44-0bb9f8fb1c59
 
+===============
+
+protected void successfulAuthentication(HttpServletRequest request, 
+    HttpServletResponse response, FilterChain chain, 
+    Authentication authResult) throws IOException, ServletException {
+   
 
 
