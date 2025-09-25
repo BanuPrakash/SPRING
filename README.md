@@ -1226,3 +1226,32 @@ JwtAuthenticationFilter
 
 eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbm5lQGNpc2NvLmNvbSIsImlhdCI6MTc1ODc4MjI1MSwiZXhwIjoxNzU4NzgzNjkxLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sInJvbGVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwiaXNzIjoiaHR0cHM6Ly9hdXRoc2VydmVyLmNpc2NvLmNvbSJ9.bBy6YdozL-HeD1GmDp2nnD2YFc2UeunhcCEtoIhdI-I
 
+==========
+
+Unit Testing:
+Testing in Isolation by mocking dependecies
+RestController - Service - Repository - Database
+
+We will test RestControllers by mocking Service tier
+
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+ </dependency>
+```
+* Mockito library to mock [ alternates are JMock , EasyMock]
+* JUnit [ Unit testing framework - TestNG/JUnit]
+* json-path [ https://jsonpath.com/ ]
+* Hamcrest [ https://hamcrest.org/JavaHamcrest/tutorial ]
+
+@WebMvcTest - loads a minimalistic Spring Container
+- MockMvc using which we can make HTTP requests in testing env
+- Testing version of DispatcherServlet
+- HandlerMapping
+- HttpMessageConvertors
+
+- Won't load Service / Repo / database ...
+
+
