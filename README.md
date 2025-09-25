@@ -1131,4 +1131,9 @@ protected void successfulAuthentication(HttpServletRequest request,
     Authentication authResult) throws IOException, ServletException {
    
 
+https://docs.spring.io/spring-security/reference/servlet/appendix/database-schema.html
+https://bcrypt-generator.com/
+
+Resume @ 11:10 [ 20 min tea break]
+
 
